@@ -8,7 +8,10 @@ src/
   │    ├── Bill.java
   │    ├── Payment.java
   │    ├── BillService.java
+  │    ├── BillState.java
+  │    ├── BillType.java
   │    ├── PaymentService.java
+  │    ├── PaymentState.java
   ├── commands/
   │    ├── Command.java
   │    ├── CommandFactory.java
