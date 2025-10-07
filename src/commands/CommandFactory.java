@@ -3,9 +3,7 @@ package commands;
 import core.BillService;
 import core.PaymentService;
 
-/**
- * Factory for creating command instances
- */
+
 public class CommandFactory {
     private final BillService billService;
     private final PaymentService paymentService;
@@ -15,25 +13,35 @@ public class CommandFactory {
         this.paymentService = paymentService;
     }
 
-    /**
-     * Create a command based on the command name
-     */
     public Command createCommand(String commandName) {
-        switch (commandName.toUpperCase()) {
+        String[] parts = commandName.toUpperCase().split(" ", 2);
+        String mainCommand = parts[0];
+        
+        // Handle unified bill commands
+        if (mainCommand.equals("BILL")) {
+            return new BillCommand(billService);
+        }
+        
+        // Handle unified payment commands
+        if (mainCommand.equals("PAYMENT")) {
+            return new PaymentCommand(paymentService, billService);
+        }
+        
+        // Handle legacy command format for backward compatibility
+        switch (mainCommand) {
             case "CASH_IN":
-                return new CashInCommand(paymentService);
+                return new PaymentCommand(paymentService, billService);
             case "LIST_BILL":
-                return new ListBillCommand(billService);
-            case "PAY":
-                return new PayCommand(billService, paymentService);
+            case "CREATE_BILL":
+            case "UPDATE_BILL":
+            case "DELETE_BILL":
             case "DUE_DATE":
-                return new DueDateCommand(billService);
-            case "SCHEDULE":
-                return new ScheduleCommand(billService, paymentService);
-            case "LIST_PAYMENT":
-                return new ListPaymentCommand(paymentService);
             case "SEARCH_BILL_BY_PROVIDER":
-                return new SearchBillByProviderCommand(billService);
+                return new BillCommand(billService);
+            case "PAY":
+            case "SCHEDULE":
+            case "LIST_PAYMENT":
+                return new PaymentCommand(paymentService, billService);
             default:
                 return null;
         }

@@ -2,9 +2,7 @@ package core;
 
 import java.time.LocalDate;
 
-/**
- * Represents a payment transaction
- */
+
 public class Payment {
     private int id;
     private long amount;
@@ -42,6 +40,18 @@ public class Payment {
 
     public void setState(PaymentState state) {
         this.state = state;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
     }
 
     @Override

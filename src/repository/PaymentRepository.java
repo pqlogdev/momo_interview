@@ -7,16 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Repository for storing and retrieving payments
- */
+
 public class PaymentRepository {
     private final Map<Integer, Payment> payments = new HashMap<>();
     private int nextId = 1;
 
-    /**
-     * Save a payment to the repository
-     */
+    
     public Payment save(Payment payment) {
         payments.put(payment.getId(), payment);
         if (payment.getId() >= nextId) {
@@ -25,23 +21,36 @@ public class PaymentRepository {
         return payment;
     }
 
-    /**
-     * Find a payment by ID
-     */
+    
     public Payment findById(int id) {
         return payments.get(id);
     }
 
-    /**
-     * Get all payments
-     */
+    
     public List<Payment> findAll() {
         return new ArrayList<>(payments.values());
     }
 
-    /**
-     * Get the next available ID
-     */
+    public Payment updateById(int id, Payment payment) {
+        Payment p = payments.get(id);
+        if (p == null) {
+            System.out.println("No payments found");
+            return null;
+        }
+        p.setAmount(payment.getAmount());
+        p.setPaymentDate(payment.getPaymentDate());
+        p.setState(payment.getState());
+        p.setBillId(payment.getBillId());
+        payments.put(id, p);
+        return p;
+    }
+
+    
+    public boolean delete(int id) {
+        return payments.remove(id) != null;
+    }
+
+    
     public int getNextId() {
         return nextId;
     }

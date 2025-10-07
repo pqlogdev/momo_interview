@@ -2,9 +2,7 @@ package core;
 
 import java.time.LocalDate;
 
-/**
- * Represents a bill in the system
- */
+
 public class Bill {
     private int id;
     private BillType type;
@@ -13,7 +11,7 @@ public class Bill {
     private BillState state;
     private String provider;
 
-    public Bill(int id, BillType type, long amount, LocalDate dueDate, String provider) {
+    public Bill(int id, BillType type, long amount, LocalDate dueDate, BillState state, String provider) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -52,6 +50,18 @@ public class Bill {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void setType(BillType type) {
+        this.type = type;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
     }
 
     @Override

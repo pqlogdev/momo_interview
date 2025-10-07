@@ -14,21 +14,24 @@ public class Main {
         PaymentService paymentService = new PaymentService(paymentRepository, billRepository);
         
         // Initialize with sample data
-        billService.initializeWithSampleData();
+        // billService.initializeWithSampleData();
         
         CommandFactory commandFactory = new CommandFactory(billService, paymentService);
         
         if (args.length > 0) {
             // Execute a single command from command line arguments
-            String commandName = args[0];
-            String[] commandArgs = new String[args.length - 1];
-            System.arraycopy(args, 1, commandArgs, 0, args.length - 1);
+            StringBuilder fullCommand = new StringBuilder();
+            for (String arg : args) {
+                fullCommand.append(arg).append(" ");
+            }
+            String commandString = fullCommand.toString().trim();
             
-            Command command = commandFactory.createCommand(commandName);
+            Command command = commandFactory.createCommand(commandString);
             if (command != null) {
-                command.execute(commandArgs);
+                // For unified commands, pass empty args as the command itself contains the operation
+                command.execute(new String[0]);
             } else {
-                System.out.println("Unknown command: " + commandName);
+                System.out.println("Unknown command: " + args[0]);
             }
         } else {
             // Interactive shell mode
@@ -49,7 +52,7 @@ public class Main {
                     System.out.println("Good bye!");
                     running = false;
                 } else {
-                    Command command = commandFactory.createCommand(commandName);
+                    Command command = commandFactory.createCommand(input.trim());
                     if (command != null) {
                         command.execute(commandArgs);
                     } else {

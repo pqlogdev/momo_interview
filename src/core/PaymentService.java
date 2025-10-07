@@ -8,9 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Service for managing payments
- */
+
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final BillRepository billRepository;
@@ -22,24 +20,18 @@ public class PaymentService {
         this.account = new Account();
     }
 
-    /**
-     * Add funds to account
-     */
+    
     public long cashIn(long amount) {
         account.cashIn(amount);
         return account.getBalance();
     }
 
-    /**
-     * Get current account balance
-     */
+    
     public long getBalance() {
         return account.getBalance();
     }
 
-    /**
-     * Pay a specific bill
-     */
+    
     public boolean payBill(int billId) {
         Bill bill = billRepository.findById(billId);
         if (bill == null || bill.getState() == BillState.PAID) {
@@ -66,9 +58,7 @@ public class PaymentService {
         return true;
     }
 
-    /**
-     * Pay multiple bills
-     */
+    
     public boolean payMultipleBills(List<Integer> billIds) {
         // Calculate total amount needed
         long totalAmount = 0;
@@ -132,9 +122,6 @@ public class PaymentService {
         return true;
     }
 
-    /**
-     * Get all payments
-     */
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }

@@ -1,8 +1,6 @@
 package core;
 
-/**
- * Manages the user's account balance and payment operations
- */
+
 public class Account {
     private long balance;
 

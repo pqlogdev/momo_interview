@@ -7,16 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Repository for storing and retrieving bills
- */
+
 public class BillRepository {
     private final Map<Integer, Bill> bills = new HashMap<>();
     private int nextId = 1;
 
-    /**
-     * Save a bill to the repository
-     */
+    
     public Bill save(Bill bill) {
         bills.put(bill.getId(), bill);
         if (bill.getId() >= nextId) {
@@ -25,30 +21,33 @@ public class BillRepository {
         return bill;
     }
 
-    /**
-     * Find a bill by ID
-     */
+    
     public Bill findById(int id) {
         return bills.get(id);
     }
 
-    /**
-     * Get all bills
-     */
+    
     public List<Bill> findAll() {
         return new ArrayList<>(bills.values());
     }
 
-    /**
-     * Delete a bill
-     */
+    public void update(Bill bill) {
+        Bill b = bills.get(bill.getId());
+        
+        b.setType(bill.getType());
+        b.setAmount(bill.getAmount());
+        b.setDueDate(bill.getDueDate());
+        b.setState(bill.getState());
+        b.setProvider(bill.getProvider());
+        bills.put(bill.getId(), b);
+    }
+
+    
     public boolean delete(int id) {
         return bills.remove(id) != null;
     }
 
-    /**
-     * Get the next available ID
-     */
+    
     public int getNextId() {
         return nextId;
     }
