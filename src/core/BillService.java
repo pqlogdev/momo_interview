@@ -67,6 +67,16 @@ public class BillService {
         return true;
     }
 
+    public boolean markBillAsUnpaid(int billId) {
+        Bill bill = billRepository.findById(billId);
+        if (bill == null) {
+            return false;
+        }
+        
+        bill.setState(BillState.NOT_PAID);
+        return true;
+    }
+
     public Bill createBill(BillType type, long amount, LocalDate dueDate, String provider) {
         int id = billRepository.getNextId();
         Bill bill = new Bill(id, type, amount, dueDate, BillState.NOT_PAID, provider);
