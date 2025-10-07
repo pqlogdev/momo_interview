@@ -33,6 +33,46 @@ src/
        └── PaymentServiceTest.java
 ```
 
+## How to Compile
+
+### Using Provided Scripts
+
+#### On Unix/Linux/macOS:
+```bash
+# Make the script executable (if needed)
+chmod +x compile.sh
+
+# Compile the project
+./compile.sh
+```
+
+#### On Windows:
+```bash
+# Using Command Prompt
+compile.bat
+
+# Using Git Bash or similar
+./compile.sh
+```
+
+### Manual Compilation
+
+```bash
+# Create bin directory if it doesn't exist
+mkdir -p bin
+
+# Compile main source files
+javac -d bin src/Main.java src/core/*.java src/commands/*.java src/repository/*.java src/utils/*.java
+
+# Compile test files with JUnit
+javac -cp "bin;lib/junit-platform-console-standalone-1.9.2.jar" -d bin -sourcepath src src/tests/*.java
+```
+
+> Note: On Unix/Linux/macOS systems, use colon (:) instead of semicolon (;) in the classpath:
+> ```bash
+> javac -cp "bin:lib/junit-platform-console-standalone-1.9.2.jar" -d bin -sourcepath src src/tests/*.java
+> ```
+
 ## How to Run
 
 ```bash
